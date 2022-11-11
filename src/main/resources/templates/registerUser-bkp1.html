@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: #f1f1f1;
+  }
+
+  #regForm {
+    background-color: #ffffff;
+    margin: 100px auto;
+    font-family: Raleway;
+    padding: 40px;
+    width: 70%;
+    min-width: 300px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  input {
+    padding: 10px;
+    width: 100%;
+    font-size: 17px;
+    font-family: Raleway;
+    border: 1px solid #aaaaaa;
+  }
+
+  /* Mark input boxes that gets an error on validation: */
+  input.invalid {
+    background-color: #ffdddd;
+  }
+
+  /* Hide all steps by default: */
+  .tab {
+    display: none;
+  }
+
+  button {
+    background-color: #04AA6D;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 17px;
+    font-family: Raleway;
+    cursor: pointer;
+  }
+
+  button:hover {
+    opacity: 0.8;
+  }
+
+  #prevBtn {
+    background-color: #bbbbbb;
+  }
+
+  /* Make circles that indicate the steps of the form: */
+  .step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+  }
+
+  .step.active {
+    opacity: 1;
+  }
+
+  /* Mark the steps that are finished and valid: */
+  .step.finish {
+    background-color: #04AA6D;
+  }
+</style>
+
+<body>
+
+  <div th:if="${session.message}" class="alert-alert-success" role="alert">
+    <p th:text="${session.message}"></p>
+    <th:block th:text="${#session.removeAttribute('message')}" }>
+  </div>
+
+  <!-- <form th:action="@{/api/registeruser}" th:object="${user}" method="post" id="regForm"> -->
+    <form id="regForm">
+    <h1>Register:</h1>
+    <!-- reg User -->
+    <div class="tab">Registered Name:
+      <p><input placeholder="First name..." oninput="this.className = ''" name="name"></p>
+      <label for="">Contact Email</label>
+      <p><input placeholder="Last name..." oninput="this.className = ''" name="email"></p>
+      <label for="">Tax Number</label>
+      <p><input placeholder="Last name..." oninput="this.className = ''" name="taxNo"></p>
+      <label for="">Mobile Number</label>
+      <p><input placeholder="Last name..." oninput="this.className = ''" name="mobileNo"></p>
+      <label for="">landline Number</label>
+      <p><input placeholder="Last name..." oninput="this.className = ''" name="landline"></p>
+  
+      <label for="">Address</label>
+      <p><input placeholder="Last name..." oninput="this.className = ''" name="addr"></p>
+  
+      <label for="">Pincode</label>
+      <p><input placeholder="Last name..." oninput="this.className = ''" name="pinCode"></p>
+  
+      <label for="">Country</label>
+      <p><input placeholder="Last name..." oninput="this.className = ''" name="country"></p>
+    </div>
+
+    <!-- Add Document -->
+    <div class="tab">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Legal Document</h2>
+
+          <p>Tax Letter :<input placeholder="E-mail..." oninput="this.className = ''" name="email" type="file"></p>
+          <p>Incorporation Letter :<input placeholder="Phone..." oninput="this.className = ''" name="phone" type="file">
+          </p>
+          <p>Additionl Document :<input placeholder="Phone..." oninput="this.className = ''" name="phone" type="file"
+              multiple></p>
+        </div>
+      </div>
+
+      <!-- add BODIR -->
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Board of Directors</h2><span><Button onclick="adBoardDir()" >Add</Button></span>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Official Email</th>
+                <th scope="col">Mytrust Email</th>
+                <th scope="col">Mobile Number</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                <td>@mdo</td>
+
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry the Bird</td>
+                <td>@twitter</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <!-- <td colspan="2">Larry the Bird</td> -->
+                <td>Larry the Bird</td>
+                <td>@twitter</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <div class="tab">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Add Spoc</h2><span><Button onclick="addSpoc()">Add</Button></span>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Official Email</th>
+                <th scope="col">Mytrust Email</th>
+                <th scope="col">Mobile Number</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                <td>@mdo</td>
+
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry the Bird</td>
+                <td>@twitter</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <!-- <td colspan="2">Larry the Bird</td> -->
+                <td>Larry the Bird</td>
+                <td>@twitter</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab">Consensent:
+
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">We will comply with:</h2>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Design Guidlines of Mytrust
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+              Implements the Use Case and User journey as mentioned in this documnet
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+            <label class="form-check-label" for="flexCheckChecked">
+              Deploy an exact build of e-Service which is proven and approved in Staging Enviroment 
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+            <label class="form-check-label" for="flexCheckChecked">
+              Fix any issues(Functional and Non-Functional) that may aries in production Enviroment whithin 72 hrs.
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+            <label class="form-check-label" for="flexCheckChecked">
+              Not perform any Security Assesement on MyTRUST Production or Staging Enviroment,without 
+              prior information Authorized. 
+            </label>
+          </div>
+          <br>
+
+          <DIV STYLE="background-color:#000000; height:10px; width:100%;"></DIV>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+            <label class="form-check-label" for="flexCheckChecked">
+              This may include reciving notification of the outcome of this application
+            </label>
+          </div>
+          <br>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+            <label class="form-check-label" for="flexCheckChecked">
+              I agree to the terms of service and privacy policy
+            </label>
+          </div>
+
+          <div>
+            <button class="btn-btn-danger">Cancel</button>
+            <button class="btn-btn-danger">Submit Application</button>
+
+          </div>
+
+         
+         
+        </div>
+      </div>
+     
+    </div>
+    <div style="overflow:auto;">
+      <div style="float:right;">
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+        <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+    </div>
+    <!-- <button type="submit">Save</button> -->
+    <!-- <button type="button" onclick="uploadDocument">Next</button> -->
+
+  </form>
+
+  <script>
+    var currentTab = 0; // Current tab is set to be the first tab (0)
+    showTab(currentTab); // Display the current tab
+
+    function showTab(n) {
+      // This function will display the specified tab of the form...
+      var x = document.getElementsByClassName("tab");
+      x[n].style.display = "block";
+      //... and fix the Previous/Next buttons:
+      if (n == 0) {
+        document.getElementById("prevBtn").style.display = "none";
+      } else {
+        document.getElementById("prevBtn").style.display = "inline";
+      }
+      if (n == (x.length - 1)) {
+        document.getElementById("nextBtn").innerHTML = "Submit";
+      } else {
+        document.getElementById("nextBtn").innerHTML = "Next";
+      }
+      //... and run a function that will display the correct step indicator:
+      fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+      // This function will figure out which tab to display
+      var x = document.getElementsByClassName("tab");
+      // Exit the function if any field in the current tab is invalid:
+      if (n == 1 && !validateForm()) return false;
+      // Hide the current tab:
+      x[currentTab].style.display = "none";
+      // Increase or decrease the current tab by 1:
+      currentTab = currentTab + n;
+      // if you have reached the end of the form...
+      if (currentTab >= x.length) {
+        // ... the form gets submitted:
+        document.getElementById("regForm").submit();
+        return false;
+      }
+      // Otherwise, display the correct tab:
+      showTab(currentTab);
+    }
+
+    function validateForm() {
+      // This function deals with validation of the form fields
+      var x, y, i, valid = true;
+      x = document.getElementsByClassName("tab");
+      y = x[currentTab].getElementsByTagName("input");
+      // A loop that checks every input field in the current tab:
+      for (i = 0; i < y.length; i++) {
+        // If a field is empty...
+        if (y[i].value == "") {
+          // add an "invalid" class to the field:
+          y[i].className += " invalid";
+          // and set the current valid status to false
+          valid = false;
+        }
+      }
+      // If the valid status is true, mark the step as finished and valid:
+      if (valid) {
+        document.getElementsByClassName("step")[currentTab].className += " finish";
+      }
+      return valid; // return the valid status
+    }
+
+    function fixStepIndicator(n) {
+      // This function removes the "active" class of all steps...
+      var i, x = document.getElementsByClassName("step");
+      for (i = 0; i < x.length; i++) {
+        x[i].className = x[i].className.replace(" active", "");
+      }
+      //... and adds the "active" class on the current step:
+      x[n].className += " active";
+    }
+  </script>
+
+<script>
+  function adBoardDir(){
+
+//window.location.href=`http://localhost:8090/api/mytrust/addboarddir`
+
+window.location.href = `http://localhost:8090/api/mytrust/addboarddir`;
+
+  }
+</script>
+
+</body>
+
+</html>

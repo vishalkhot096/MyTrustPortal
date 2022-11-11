@@ -1,0 +1,236 @@
+<!-- <html xmlns="http://www.w3.org/1999/xhtml"> -->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+  layout:decorate="~{layout}">
+
+<!-- <head>
+  <title>MyTrust Portal</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+    integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Roboto", sans-serif;
+    }
+
+    header {
+      position: fixed;
+      background: grey;
+      padding: 30px;
+      width: 100%;
+      height: 20px;
+      top: 0px;
+    }
+
+
+
+    .user {
+      float: right;
+      color: black;
+      margin-bottom: 20px;
+    }
+
+    .sidebar {
+      background: #2F323A;
+      margin-top: 80px;
+      padding-top: 30px;
+      position: fixed;
+      left: 0;
+      width: 264px;
+      height: 100%;
+      top: 0px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      display: block;
+      width: 100%;
+      line-height: 60px;
+      text-decoration: none;
+      padding-left: 40px;
+      box-sizing: border-box;
+      transition: 0.5s;
+
+    }
+
+    .sidebar a:hover {
+      background: #19B3D3;
+    }
+
+    .profile {
+      height: 53px;
+      position: relative;
+      bottom: 18px;
+      float: right;
+      right: 128px;
+    }
+
+    .container {
+      max-width: 1140px;
+      position: relative;
+      top: 80px;
+      left: 132px;
+      padding: 2px;
+    }
+  </style>
+</head> -->
+
+<head>
+  <title>
+    home
+  </title>
+</head>
+
+<body>
+  <header>
+
+    <!-- <img th:src="@{/assets/images/Group 97760 (1).png}" style="position: relative; bottom: 23px" />
+
+      <img th:src="@{/assets/images/img_avatar.png}" class="profile" style="position: relative; bottom: 23px" /> -->
+
+  </header>
+  <!-- <div class="sidebar">
+    <a href="index.html"><span>Home</span></a>
+    <a href="organization.html"><span>Organization</span></a>
+    <a href=""><span>Citizen Services</span></a>
+    <a href=""><span>Professional Services</span></a>
+    <a href=""><span>Settings</span></a>
+  </div> -->
+
+  <section layout:fragment="content">
+    <!-- <div class="container"> -->
+
+    <div class="card">
+      <div class="card-header">
+        <img th:src="@{/assets/images/Group 90.png}" alt="onboarding-form-logo" style="height: 35px;">
+
+        organazations Onboarding Application Form
+      </div>
+      <div class="card-body">
+        <div class="card">
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-4 mb-4">
+                <div class="card">
+                  <img class="card-img-top" src="" alt="">
+
+                  <div class="card-body" style="background-color: whitesmoke;">
+                    <h5 class="card-title">ONBOARD NEW ORGANATION</h5>
+                    <p class="card-text" hidden>
+                      ONBOARD NEW ORGANATION
+                    </p>
+                    <a th:href="@{/addorganazation}" class="btn btn-outline-primary btn-sm">
+
+                      Start new application
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 mb-4">
+                <div class="card">
+                  <img class="card-img-top" src="" alt="">
+
+                  <div class="card-body" style="background-color: whitesmoke;">
+                    <h5 class="card-title">CONTINUE NEW APPLICATION</h5>
+                    <p class="card-text" hidden>
+                      CONTINUE APPLICATION
+                    </p>
+
+                    <a th:href="@{/resumeapp}" class="btn btn-outline-primary btn-sm">
+                      Resume saved application
+                    </a>
+                    <!-- <a href="#" class="btn btn-outline-secondary btn-sm">
+                    <i class="far fa-heart"></i></a> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 mb-4">
+                <div class="card">
+                  <img class="card-img-top" src="" alt="">
+
+                  <div class="card-body" style="background-color: whitesmoke;">
+                    <h5 class="card-title">VIEW PRIVIOUS APPLICATION</h5>
+                    <p class="card-text" hidden>
+                      VIEW PRIVIOUS APPLICATION
+                    </p>
+
+                    <a th:href="@{/apphistory}" class="btn btn-outline-primary btn-sm">
+                      Application history
+                    </a>
+                    <!-- <a href="#" class="btn btn-outline-secondary btn-sm">
+                    <i class="far fa-heart"></i></a> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="table" style="margin-top: 63px;">
+              <span style="font-size: 18px;font-weight: 600;">
+                <img th:src="@{/assets/images/Group 742.png}" alt="onboarding-form-logo" style="height: 31px;">
+
+                Organazations
+              </span>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- </div> -->
+
+
+
+  </section>
+
+  <script>
+    function addorganazation() {
+      alert("add orga")
+      window.location.href = `http://localhost:8090/api/mytrust/addorganazation`;
+    }
+
+    function aplicationHistory() {
+      window.location.href = `http://localhost:8090/api/mytrust/apphistory`;
+    }
+
+    function resumeApplication() {
+      window.location.href = `http://localhost:8090/api/mytrust/resumeapp`;
+    }
+  </script>
+</body>
+
+</html>

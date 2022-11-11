@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" th:fragment="Layout(content)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link th:href="@{/assets/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/assets/css/styleforStepperForm.css}" rel="stylesheet" />
+
+
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <img th:src="@{/assets/images/Group 97760 (1).png}" style="position: relative; bottom: 23px" />
+
+            <img th:src="@{/assets/images/img_avatar.png}" class="profile" style="position: relative; bottom: 23px" />
+        </div>
+    </header>
+    <div class="sidebar">
+        <a href="index.html"><span>Home</span></a>
+        <a href="organization.html"><span>Organization</span></a>
+        <a href=""><span>Citizen Services</span></a>
+        <a href=""><span>Professional Services</span></a>
+        <a href=""><span>Settings</span></a>
+    </div>
+
+    <!-- <div th:replace="${content}"> -->
+
+    </div>
+
+
+    <section class="p-0" id="Footer" style="background-color: red;">
+
+        <p class="text-center text-white  m-0 py-4" style="background-color: #5b738a;">
+            <img th:src="@{/assets/images/mytrustlogo.png}" class=" mytrustlogo"
+                style="max-width: 191px;position: relative;right: 389px;height: 37px;" />
+            &copy;
+            <script>document.write(new Date().getFullYear())</script> DigitalTrust technology All Rights Reserved.
+        </p>
+
+
+    </section>
+
+</body>
+
+</html>

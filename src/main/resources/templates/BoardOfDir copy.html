@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<!-- <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+  layout:decorate="~{layout}"> -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" layout:decorate="~{layout}">
+
+  <!-- <html xmlns="http://www.w3.org/1999/xhtml"> -->
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+  crossorigin="anonymous"></script>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: #f1f1f1;
+  }
+
+  #regForm {
+    background-color: #ffffff;
+    margin: 100px auto;
+    font-family: Raleway;
+    padding: 40px;
+    width: 70%;
+    min-width: 300px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  input {
+    padding: 10px;
+    width: 100%;
+    font-size: 17px;
+    font-family: Raleway;
+    border: 1px solid #aaaaaa;
+  }
+
+  /* Mark input boxes that gets an error on validation: */
+  input.invalid {
+    background-color: #ffdddd;
+  }
+
+  /* Hide all steps by default: */
+  .tab {
+    display: none;
+  }
+
+  button {
+    background-color: #04AA6D;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 17px;
+    font-family: Raleway;
+    cursor: pointer;
+  }
+
+  button:hover {
+    opacity: 0.8;
+  }
+
+  #prevBtn {
+    background-color: #bbbbbb;
+  }
+
+  /* Make circles that indicate the steps of the form: */
+  .step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+  }
+
+  .step.active {
+    opacity: 1;
+  }
+
+  /* Mark the steps that are finished and valid: */
+  .step.finish {
+    background-color: #04AA6D;
+  }
+</style>
+
+<body>
+
+  <!-- <div th:if="${session.message}" class="alert-alert-success" role="alert">
+    <p th:text="${session.message}"></p>
+    <th:block th:text="${#session.removeAttribute('message')}" }>
+  </div> -->
+
+  <section layout:fragment="content">
+
+    <div>
+      <div class="card">
+        <div class="card-header">
+          <img  th:src="@{/assets/images/Group 90.png}" alt="onboarding-form-logo" style="height: 35px;">
+
+          Onboarding Application Form - <span th:text="${appid}"></span>
+        </div>
+        <div class="card-body">
+
+          <form th:action="@{/upload-file}" enctype="multipart/form-data" method="POST">
+
+
+            <input placeholder="appid..." name="applicationId" th:value="*{privioussata?.applicationId}" hidden>
+
+
+
+            <div class="card">
+              <div class="card-header">
+                Legal Document
+              </div>
+              <div class="card-body">
+
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputEmail4">Tax Letter</label>
+                    <input type="file" class="form-control" id="inputEmail4" placeholder="Name" name="taxLetter">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="inputPassword4">Incorporation Letter</label>
+                    <input type="file" class="form-control" id="inputPassword4" placeholder="Email"
+                      name="incorporationLetter">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="inputEmail4">Additionl Document</label>
+                    <input type="file" class="form-control" id="inputEmail4" placeholder="First document"
+                      name="additionalDoc">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputPassword4">Doc 1</label>
+                    <input type="file" class="form-control" id="inputPassword4" placeholder="Second document"
+                      name="additionalDoc2">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputEmail4">Doc 2</label>
+                    <input type="file" class="form-control" id="inputEmail4" placeholder="Third  Document"
+                      name="additionalDoc3">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            
+          
+
+            <div class="card">
+              <div class="card-header">
+                <div class="float-left">
+                  Board of Directors
+                </div>
+
+                <div class="float-right">
+                  <!-- <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
+                    data-target="#modalRegisterForm">Launch
+                    Modal Register Form</a> -->
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                    data-target="#modalRegisterForm">Add Board Directors</button>
+                </div>
+
+              </div>
+              <div class="card-body">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Official Email</th>
+                      <th scope="col">MyTRUST Email</th>
+                      <th scope="col">Mobile Number</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr th:each="director :${listdirector}">
+                      <td th:text="${director.director_name}"></td>
+                      <td th:text="${director.office_email}"></td>
+                      <td th:text="${director.mytrust_email}"></td>
+                      <td th:text="${director.mobile_number}"></td>
+
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div> 
+            <!-- <button type="button" class="btn btn-primary" th:attr="onclick=|privious()|">Privious</button> -->
+            <!-- <a th:href="@{/addorganazation(appId=${appid},action='privious')}">Privious</a> -->
+        
+
+            <button type="button" class="btn btn-primary" onclick="priviousData()">previous
+            </button>
+
+
+            <button type="submit" class="btn btn-primary">Next</button>
+          </form>
+
+
+        </div>
+      </div>
+
+
+
+      <!-- model open code -->
+      <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
+      aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body mx-3">
+
+            <form th:action="@{/addboarddir}" th:object="${user}" method="post" id="regForm">
+
+              <div class="form-group row">
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="Name"
+                    name="directorName">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Office Email</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" id="inputPassword3" placeholder="Email"
+                    name="officeEmail">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Mytrust Email</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" id="inputPassword3" placeholder="Mytrust Email"
+                    name="mytrustEmail">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Mobile No</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" id="inputPassword3" placeholder="mobile Number"
+                    name="mobileNumber">
+                </div>
+              </div>
+
+
+
+              <div class="form-group row">
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary">Save</button>
+
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    <script defer th:inline="javascript">
+      $(document).ready(function(){
+        $('#organazationHover').addClass('active');
+      })
+
+      /*<![CDATA[*/
+      var appId = /*[[${appid}]]*/ "default";
+      /*]]>*/
+
+     /* function privious(){
+        console.log("privious");
+        
+        alert(appId);
+        window.location.href = "http://localhost:8090/addorganazation?appid=" + appId + "&action=privious";
+  
+      }*/
+
+      function priviousData(){
+        alert(appId);
+        window.location.href = "http://localhost:8090/addorganazation?appid=" + appId + "&action=privious";
+
+      }
+
+    </script>
+    
+
+  </section>
+
+</body>
+
+</html>

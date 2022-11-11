@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" layout:decorate="~{layout}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+
+<!-- CSS only -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="WebViewer/lib/webviewer.min.js"></script>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: #f1f1f1;
+  }
+
+  #regForm {
+    background-color: #ffffff;
+    margin: 100px auto;
+    font-family: Raleway;
+    padding: 40px;
+    width: 70%;
+    min-width: 300px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  input {
+    padding: 10px;
+    width: 100%;
+    font-size: 17px;
+    font-family: Raleway;
+    border: 1px solid #aaaaaa;
+  }
+
+  /* Mark input boxes that gets an error on validation: */
+  input.invalid {
+    background-color: #ffdddd;
+  }
+
+  /* Hide all steps by default: */
+  .tab {
+    display: block;
+  }
+
+  button {
+    background-color: #04AA6D;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 17px;
+    font-family: Raleway;
+    cursor: pointer;
+  }
+
+  button:hover {
+    opacity: 0.8;
+  }
+
+  #prevBtn {
+    background-color: #bbbbbb;
+  }
+
+  /* Make circles that indicate the steps of the form: */
+  .step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+  }
+
+  .step.active {
+    opacity: 1;
+  }
+
+  /* Mark the steps that are finished and valid: */
+  .step.finish {
+    background-color: #04AA6D;
+  }
+
+  .file-input__input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .file-input__label {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 12px;
+    background-color: #4245a8;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  }
+
+  .file-input__label svg {
+    height: 16px;
+    margin-right: 4px;
+  }
+</style>
+
+<body>
+  <!-- <h2 th:text="${registerdata.name}"></h2> -->
+
+
+
+
+  <form th:action="@{/api/mytrust/concent}" method="post" id="regForm" enctype="multipart/form-data">
+
+    <div class="tab">consent:
+
+      <button onclick="toggleText()" id="btnPrint" type="button">Download Concent</button>
+
+
+
+      <input id="fileupload" type="file" name="fileupload" />
+
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">We will comply with:</h2>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="guidlines">
+            <label class="form-check-label" for="flexCheckDefault">
+              Design Guidlines of Mytrust
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" name="usercase">
+            <label class="form-check-label" for="flexCheckChecked">
+              Implements the Use Case and User journey as mentioned in this documnet
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" name="exact_build">
+            <label class="form-check-label" for="flexCheckChecked">
+              Deploy an exact build of e-Service which is proven and approved in Staging Enviroment
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" name="fix_issue">
+            <label class="form-check-label" for="flexCheckChecked">
+              Fix any issues(Functional and Non-Functional) that may aries in production Enviroment whithin 72 hrs.
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" name="security_assisement">
+            <label class="form-check-label" for="flexCheckChecked">
+              Not perform any Security Assesement on MyTRUST Production or Staging Enviroment,without
+              prior information Authorized.
+            </label>
+          </div>
+          <br>
+
+          <DIV STYLE="background-color:#000000; height:10px; width:100%;"></DIV>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" name="recive_notification">
+            <label class="form-check-label" for="flexCheckChecked">
+              This may include reciving notification of the outcome of this application
+            </label>
+          </div>
+          <br>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" name="aggreement">
+            <label class="form-check-label" for="flexCheckChecked">
+              I agree to the terms of service and privacy policy
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" data-toggle="modal" data-target="#exampleModalCenter" onclick="uploadFile()">Submit
+      Application</button>
+  </form>
+
+  <!-- for pdf logic -->
+  <div id="concentForm" style="display: block;">
+
+    <label hidden>Application Id ::</label>
+    <input type="text" id="Application Id ::" th:value="*{registerdata?.applicationId}" hidden />
+    <br />
+    <br />
+    <label hidden>Organazation Name ::</label>
+    <input type="text" id="Organazation Name:" th:value="*{registerdata?.name}" hidden />
+    <br />
+    <br />
+    <label hidden>Country :</label>
+    <input type="text" id="Country:" th:value="*{registerdata?.country}" hidden />
+    <br />
+    <br />
+    <label hidden>Mobile No :</label>
+    <input type="text" id="Mobile No:" th:value="*{registerdata?.mobileNo}" hidden />
+    <br />
+    <br />
+    <label hidden>Tax No :</label>
+    <input type="text" id="Tax No:" th:value="*{registerdata?.taxNo}" hidden />
+    <br />
+    <br />
+  </div>
+
+
+  <section layout:fragment="content">
+
+    <div class="card">
+      <div class="card-header">
+        <img th:src="@{/assets/images/Group 90.png}" alt="onboarding-form-logo" style="height: 35px;">
+
+        Onboarding Application Form - <span th:text="${appid}"></span>
+      </div>
+      <div class="card-body">
+        <div class="card">
+          <div class="card-header">
+            <div class="float-left">
+              Informed Consent Application
+            </div>
+
+            <div class="float-right">
+              <!-- <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
+                  data-target="#modalRegisterForm">Launch
+                  Modal Register Form</a> -->
+
+              <button type="button" class="btn btn-primary" onclick="toggleText()" id="btnPrint">Download
+                Concent</button>
+            </div>
+
+          </div>
+          <div class="card-body">
+
+
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  1 of 2
+                </div>
+                <div class="col">
+                  <iframe id="docpdf" style="background-color:#EEE; height:400px;width: 400px;">
+                  </iframe>
+                </div>
+              </div>
+            </div>
+
+            <form th:action="@{/concent}" method="post" id="regForm" enctype="multipart/form-data">
+
+              <div class="float-right">
+                <span class="btn btn-primary btn-file">
+                  Upload Consent <input id="fileupload" name="fileupload" type="file">
+                </span>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="card-title">We will comply with:</h2>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      Design Guidlines of Mytrust
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                    <label class="form-check-label" for="flexCheckChecked">
+                      Implements the Use Case and User journey as mentioned in this documnet
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                    <label class="form-check-label" for="flexCheckChecked">
+                      Deploy an exact build of e-Service which is proven and approved in Staging Enviroment
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                    <label class="form-check-label" for="flexCheckChecked">
+                      Fix any issues(Functional and Non-Functional) that may aries in production Enviroment whithin 72
+                      hrs.
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                    <label class="form-check-label" for="flexCheckChecked">
+                      Not perform any Security Assesement on MyTRUST Production or Staging Enviroment,without
+                      prior information Authorized.
+                    </label>
+                  </div>
+                  <br>
+
+                  <DIV STYLE="background-color:#000000; height:2px; width:100%;"></DIV>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                    <label class="form-check-label" for="flexCheckChecked">
+                      This may include reciving notification of the outcome of this application
+                    </label>
+                  </div>
+                  <br>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                    <label class="form-check-label" for="flexCheckChecked">
+                      I agree to the terms of service and privacy policy
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <!-- <button type="button" data-toggle="modal" data-target="#exampleModalCenter" onclick="uploadFile()">Submit
+                Application</button> -->
+            </form>
+
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" th:attr="onclick=|privious()|">Cancel</button>
+
+        <button type="submit" class="btn btn-primary" onclick="uploadFile()">Submit Application</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- for pdf logic -->
+    <div id="concentForm" style="display: block;">
+
+      <label hidden>Application Id ::</label>
+      <input type="text" id="Application Id ::" th:value="*{registerdata?.applicationId}" hidden />
+      <br />
+      <br />
+      <label hidden>Organazation Name ::</label>
+      <input type="text" id="Organazation Name:" th:value="*{registerdata?.name}" hidden />
+      <br />
+      <br />
+      <label hidden>Country :</label>
+      <input type="text" id="Country:" th:value="*{registerdata?.country}" hidden />
+      <br />
+      <br />
+      <label hidden>Mobile No :</label>
+      <input type="text" id="Mobile No:" th:value="*{registerdata?.mobileNo}" hidden />
+      <br />
+      <br />
+      <label hidden>Tax No :</label>
+      <input type="text" id="Tax No:" th:value="*{registerdata?.taxNo}" hidden />
+      <br />
+      <br />
+    </div>
+
+
+    <!-- <div class="iframe">
+      <iframe id="docpdf" style="background-color:#EEE; height:400px;">
+        PDF goes here
+      </iframe>
+    </div> -->
+
+
+    <script type="text/javascript">
+
+
+      $(document).ready(async function () {
+        $('#organazationHover').addClass('active');
+
+        var inputFields = document.querySelectorAll("Input[type=text]");
+        console.log("Inpute fields:", inputFields);
+        var json = {};
+        var doc = new jsPDF();
+        for (var i = 0, l = inputFields.length; i < l; i++) {
+          if (inputFields[i].id !== undefined && inputFields[i].id) {
+            json[inputFields[i].id] = inputFields[i].value;
+            console.log("input valuue:" + inputFields[i].value)
+            doc.text(20, 10 + (i * 10),
+              inputFields[i].id + inputFields[i].value)
+          }
+
+          //after submit the value will be invisible
+          inputFields[i].style.opacity = 0;
+        }
+        console.log("jsonobj" + JSON.stringify(json));
+
+
+        //doc.output('datauristring');
+
+        var blobPDF = new Blob([doc.output('blob')], { type: 'application/pdf' });
+        /* WebViewer(
+           {
+             path:"/WebViewer/lib",
+ 
+            // initialDoc: "150kB.pdf",
+             fullAPI: true,
+           },
+           document.getElementById("viewer")
+         ).then((instance)=>{
+ 
+           alert("under webviewer")
+ 
+           instance.loadDocument(blobPDF);
+ 
+         })*/
+
+        var stringOfPdf = ""
+        var reader = new FileReader();
+        reader.readAsDataURL(blobPDF);
+        reader.onloadend = function () {
+          var base64data = reader.result;
+
+          alert(base64data);
+          var IframeView = document.getElementById("docpdf");
+          IframeView.src = base64data
+        }
+
+
+        //$('#docpdf').attr('src', doc.output('datauristring'));
+
+
+
+
+      })
+
+      function toggleText() {
+        var x = document.getElementById("btnPrint");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+
+      async function uploadFile() {
+        let formData = new FormData();
+        formData.append("file", fileupload.files[0]);
+        let response = await fetch('/concent', {
+          method: "POST",
+          body: formData
+        });
+
+        console.log(response);
+
+        if (response.status == 200) {
+          swal({
+            title: "Application Submitted!",
+            closeOnConfirm: false,
+            text: "Your application has been submitted and is under riview!\n You will be notified within 2 Business days regarding the status of your Application.If there are any issues with your application's approval,We will reach out to you immediately.",
+            imageUrl: ""
+          }).then(function () {
+            window.location.href = `http://localhost:8090/organazation`;
+          });
+        } else {
+          alert("file not uploaded successfully !!");
+        }
+      }
+
+
+      $("#btnPrint").click(function () {
+        //add input field to json object
+        var inputFields = document.querySelectorAll("Input[type=text]");
+        console.log("Inpute fields:", inputFields);
+        var json = {};
+        var doc = new jsPDF();
+        for (var i = 0, l = inputFields.length; i < l; i++) {
+          if (inputFields[i].id !== undefined && inputFields[i].id) {
+            json[inputFields[i].id] = inputFields[i].value;
+            console.log("input valuue:" + inputFields[i].value)
+            doc.text(20, 10 + (i * 10),
+              inputFields[i].id + inputFields[i].value)
+          }
+
+          //after submit the value will be invisible
+          inputFields[i].style.opacity = 0;
+        }
+        console.log("jsonobj" + JSON.stringify(json));
+
+        doc.save("Consent.pdf");
+
+      });
+
+      function toggleText() {
+        var x = document.getElementById("btnPrint");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+
+
+
+    </script>
+
+    <!-- <script src="@{/WebViewer/lib/webviewer.min.js}"></script> -->
+
+
+  </section>
+
+
+  <script type="text/javascript">
+
+    function toggleText() {
+      var x = document.getElementById("btnPrint");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+
+
+
+    async function uploadFile() {
+      let formData = new FormData();
+      formData.append("file", fileupload.files[0]);
+      let response = await fetch('/api/mytrust/concent', {
+        method: "POST",
+        body: formData
+      });
+
+      console.log(response);
+
+      if (response.status == 200) {
+        swal({
+          title: "Application Submitted!",
+          closeOnConfirm: false,
+          text: "Your application has been submitted and is under riview!\n You will be notified within 2 Business days regarding the status of your Application.If there are any issues with your application's approval,We will reach out to you immediately.",
+          imageUrl: ""
+        }).then(function () {
+          window.location.href = `http://localhost:8090/mytrust/organazation`;
+        });
+      } else {
+        alert("file not uploaded successfully !!");
+      }
+    }
+
+
+
+    $("#btnPrint").click(function () {
+      //add input field to json object
+      var inputFields = document.querySelectorAll("Input[type=text]");
+      console.log("Inpute fields:", inputFields);
+      var json = {};
+      var doc = new jsPDF();
+      for (var i = 0, l = inputFields.length; i < l; i++) {
+        if (inputFields[i].id !== undefined && inputFields[i].id) {
+          json[inputFields[i].id] = inputFields[i].value;
+          console.log("input valuue:" + inputFields[i].value)
+          doc.text(20, 10 + (i * 10),
+            inputFields[i].id + inputFields[i].value)
+        }
+
+        //after submit the value will be invisible
+        inputFields[i].style.opacity = 0;
+      }
+      console.log("jsonobj" + JSON.stringify(json));
+
+      doc.save("Consent.pdf");
+
+    });
+
+
+
+    //for file name logic
+    $('#file-input').on('change', function (event) {
+      var name = event.target.files[0].name;
+      $('#file-name').text(name);
+    })
+
+
+
+  </script>
+
+</body>
+
+</html>
